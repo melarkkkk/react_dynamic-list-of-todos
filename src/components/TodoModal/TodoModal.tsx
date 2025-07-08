@@ -16,11 +16,11 @@ export const TodoModal: React.FC<Props> = ({ todo, onClick }) => {
   useEffect(() => {
     getUser(todo.userId)
       .then(setUser)
-      .finAlly(() => setIsLoading(false));
+      .finally(() => setIsLoading(false));
   }, [todo]);
 
   return (
-    <div className="modal is-Active" data-cy="modal">
+    <div className="modal is-active" data-cy="modal">
       <div className="modal-background" />
 
       {isLoading && <Loader />}
@@ -49,7 +49,7 @@ export const TodoModal: React.FC<Props> = ({ todo, onClick }) => {
             </p>
 
             <p className="block" data-cy="modal-user">
-              {todo.Completed ? (
+              {todo.completed ? (
                 <strong className="has-text-success">Done</strong>
               ) : (
                 <strong className="has-text-danger">Planned</strong>

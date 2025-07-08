@@ -18,29 +18,21 @@ export const App: React.FC = () => {
   const [filterField, setFilterField] = useState<FilterField>(FilterField.All);
   const [query, setQuery] = useState('');
 
-  useEffect(() => {
-    setLoading(true);
+useEffect(() => {
+  setLoading(true);
 
-    const id = setTimeout(() => {
-      setLoading(false);
-    }, 300);
-
-    return () => clearTimeout(id);
-  }, []);
-
-  useEffect(() => {
-    getTodos().then(todos => {
+  getTodos()
+    .then(todos => {
       let filteredTodos = todos;
 
       switch (filterField) {
-        case FilterField.All:
-          filteredTodos = todos;
-          break;
         case FilterField.Active:
-          filteredTodos = todos.filter(todo => !todo.Completed);
+          filteredTodos = todos.filter(todo => !todo.completed);
           break;
         case FilterField.Completed:
-          filteredTodos = todos.filter(todo => todo.Completed);
+          filteredTodos = todos.filter(todo => todo.completed);
+          break;
+        default:
           break;
       }
 
@@ -51,8 +43,12 @@ export const App: React.FC = () => {
       }
 
       setVisibleTodos(filteredTodos);
+    })
+    .finally(() => {
+      setLoading(false);
     });
-  }, [filterField, query]);
+}, [filterField, query]);
+
 
   return (
     <>
